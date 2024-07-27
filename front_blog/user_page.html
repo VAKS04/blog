@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="css/base.css">
+        <title>User page</title>
+    </head>
+    <body id="body">
+        <div class="container" id="container">
+            <header>
+                <div class="main-inscription">
+                    <img class="logo" src="https://png.klev.club/uploads/posts/2024-05/png-klev-club-4lme-p-blog-png-25.png">
+                </div>
+                <nav class="navigation-panel">
+                    <ul class="part-1">
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="create_article_page.html">Добавить статью</a></li>
+                        <li><a href="">Затычка</a></li>
+                        <li><a href="">Затычка</a></li>
+                    </ul>
+                    <ul class="part-2">
+                        <li class="reg-auth-link"></li>
+                    </ul>
+                </nav>
+            </header>
+            <main>
+                <form class="container-block" id="change-form">
+                    <div class="image-block">
+                        <div class="image">
+                            <img id="image" src="https://miro.medium.com/v2/resize:fit:1400/format:webp/1*Bvkn3ol6fCOuzAM42B2Afw.jpeg">
+                        </div>
+                            <label>Новое изображение : </label>
+                            <input type="text" id="new-image">
+                    </div>
+                    <div class="other-information">
+                        <div class="label-input">
+                            <label>Имя : </label>
+                            <input type="text" id="first-name">
+                        </div>
+                        <div class="label-input">
+                            <label>Фамилия : </label>
+                            <input type="text" id="last-name">
+                        </div>
+                        <div class="label-input">
+                            <label>Никнейм : </label>
+                            <input type="text" id="username">
+                        </div>
+                        <div class="label-input">
+                            <label>Email : </label>
+                            <input type="email" id="email">
+                        </div>
+
+                        <div class="button-block">
+                            <button type="submit">Изменить</button>
+                        </div>
+
+                    </div>
+
+                </form>
+                <div class="container-articles">
+                    <div class="main-subtitle">Список ваших статей</div>
+                </div>
+            </main>
+            <footer>
+                <div class="footer-text">
+                    Сайт разработан с целью улучшить свои навыки в направлении backend-разработки
+                </div>
+            </footer>
+            <script type="module" src="js/user.js"></script>
+            <!-- <script src="js/logout.js"></script> -->
+
+        </div>
+    </body>
+</html>

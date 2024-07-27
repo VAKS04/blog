@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="css/base.css">
+        <title>Registration page</title>
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <div class="main-inscription">
+                    <img class="logo" src="https://png.klev.club/uploads/posts/2024-05/png-klev-club-4lme-p-blog-png-25.png">
+                </div>
+                <nav class="navigation-panel">
+                    <ul class="part-1">
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="create_article_page.html">Добавить статью</a></li>
+                        <li><a href="">Затычка</a></li>
+                        <li><a href="">Затычка</a></li>
+                    </ul>
+                    <ul class="part-2">
+                        <li class="reg-auth-link"></li>
+                    </ul>
+                </nav>
+            </header>
+            <main>
+                <div class="reg-auth-block">
+                    <form class="reg-auth-form" id="form">
+                        <div class="form-title">Registration</div>
+                        <div class="label-input">
+                            <label>Username : </label>
+                            <input type="text" id="username">
+                        </div>
+                        <div class="label-input">
+                            <label>Email : </label>
+                            <input type="email" id="email">
+                        </div>
+                        <div class="label-input">
+                            <label>Password : </label>
+                            <input type="password" id="password">
+                        </div>
+                        <div class="label-input">
+                            <label>Password again : </label>
+                            <input type="password" id="password2">
+                        </div>
+                        <div class="log-inscription">
+                            Do you have account?<a href="auth_page.html">Log in</a>
+                        </div>
+                        <div class="error-block" id="error-block"></div>
+                        <div class="button-block">
+                            <button type="submit">Регистрация</button>
+                        </div>
+                    </form>
+                </div>
+            </main>
+            <footer>
+                <div class="footer-text">
+                    Сайт разработан с целью улучшить свои навыки в направлении backend-разработки
+                </div>
+            </footer>
+            <script type="module" src="js/reg.js"></script>
+        </div>
+    </body>
+</html>
