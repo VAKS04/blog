@@ -4,7 +4,9 @@ from django.contrib.auth.models import AbstractUser
 
 
 class User(AbstractUser):
-    image = models.CharField(verbose_name="Ссылка картинки",blank=True,max_length=255)
+    image = models.CharField(verbose_name="Ссылка картинки",
+                              blank=True,
+                              max_length=255)
     email = models.EmailField(_("email address"))
 
     class Meta:
