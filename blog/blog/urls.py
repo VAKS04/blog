@@ -25,25 +25,33 @@ USER_API = 'api/v2/user/'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    
+
     path(ARTICLE_API,
          ArticlesApiView.as_view()),
+
     path(ARTICLE_API + 'create/',
          CreateArticleApiView.as_view()),
+
     path(ARTICLE_API +'<str:creater>/<str:title>/',
          ShowArticleApiView.as_view()),
 
     path(USER_API,UserView.as_view()),
+
     path(USER_API + 'article/<str:username>/',
          UserArticleApiView.as_view()),
+
     path(USER_API + 'article/<str:username>/<str:title>/',
          UserArticleApiView.as_view()),
+
     path(USER_API + 'article/update/<str:username>/<str:title>/',
          UserArticleApiView.as_view()),
+
     path(USER_API + 'article/delete/<str:username>/<str:title>/',
          UserArticleApiView.as_view()),
+
     path(USER_API + 'reg/',
          RegView.as_view()),
+         
     path(USER_API + '<str:email>/',
          UserView.as_view()),
 
