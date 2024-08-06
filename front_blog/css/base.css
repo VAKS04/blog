@@ -98,6 +98,71 @@ form input {
 
 /* ----------------user-page---------------- */
 
+
+ .content-article-block{
+    flex: inherit;
+    background-color: gray;
+    min-height: 100px;
+    border-radius: 15px;
+    margin: 5px;
+}
+
+ .content-article-block{
+    display: flex;
+    flex-direction: column;
+}
+
+ .content-article-block .title-block,
+ .content-article-block .text-block,
+ .content-article-block .short-inf{
+    margin: 5px;
+}
+
+ .content-article-block .tag-block{
+    display: flex;
+}
+ .content-article-block .tag-block *{
+    align-items: end;
+}
+
+ .content-article-block .short-inf{
+    display: flex;
+}
+
+ .content-article-block .short-inf .creater-block{
+    flex: 1;
+}
+
+ .content-article-block .title-block{
+    font-size: 24px;
+}
+
+ .content-article-block .text-block{
+    font-size: 18px;
+}
+
+
+.article-block .main-subtitle{
+    display: flex;
+    justify-content: center;
+    font-size: 24px;
+    margin: 0 0 10px 0;
+    /* margin: 5px 0; */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .container-block{
     display: flex;
     background-color:dimgray;
@@ -146,43 +211,6 @@ form input {
 .other-information input{
     box-sizing: border-box;
     height: 25px;
-}
-.container-articles{
-    margin: 5px;
-    background-color: dimgray;
-    border-radius: 5px;
-    min-height: 130px;
-}
-
-.container-articles .main-subtitle{
-    display: flex;
-    justify-content: center;
-    font-size: 24px;
-    margin: 0 0 10px 0;
-    /* margin: 5px 0; */
-}
-
-
-
-.container-article{
-    background-color: gray;
-    min-height: 100px;
-    margin: 5px;
-    border-radius: 5px;
-}
-
-
-.container-article .title-block,
-.container-article .text-block {
-    margin: 5px;
-}
-
-.container-article .title-block {
-    font-size: 26px;
-}
-
-.container-article .text-block {
-    font-size: 18px;
 }
 
 /* ----------------reg_page-auth_page---------------- */
@@ -254,7 +282,7 @@ form input {
 .content-block .content-article-block{
     flex: inherit;
     background-color: gray;
-    height: 120px;
+    min-height: 100px;
     border-radius: 15px;
     margin: 5px;
 }
@@ -266,8 +294,23 @@ form input {
 
 .content-block .content-article-block .title-block,
 .content-block .content-article-block .text-block,
-.content-block .content-article-block .creater-block{
+.content-block .content-article-block .short-inf{
     margin: 5px;
+}
+
+.content-block .content-article-block .tag-block{
+    display: flex;
+}
+.content-block .content-article-block .tag-block *{
+    align-items: end;
+}
+
+.content-block .content-article-block .short-inf{
+    display: flex;
+}
+
+.content-block .content-article-block .short-inf .creater-block{
+    flex: 1;
 }
 
 .content-block .content-article-block .title-block{
@@ -279,11 +322,28 @@ form input {
 }
 
 .content-block .filter-block{
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color:#242426;
     margin: 5px;
     border-radius: 15px;
     width: 25%;
     height: 300px;
+}
+
+.content-block .filter-block .filter-button{
+    margin-top: 5px;
+    display: flex;
+    justify-content: center;
+}
+
+.content-block .filter-block .tag{
+    margin: 5px 0;
+}
+
+.content-block .filter-block .filter-button *{
+    color: #0D0D0D;
 }
 
 /* ----------------article-page---------------- */
@@ -380,7 +440,3 @@ form input {
     justify-content: center;
     flex: 1;
 }
-
-
-
-

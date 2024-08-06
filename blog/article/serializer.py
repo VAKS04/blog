@@ -5,10 +5,13 @@ from .models import *
 from users.models import *
 
 
-class ArticleSerializer(serializers.Serializer):
-    title = serializers.CharField()
-    text = serializers.CharField()
-    creater = serializers.CharField()
+class ArticleSerializer(serializers.ModelSerializer):
+    creater = serializers.StringRelatedField()  # Показывает строковое представление пользователя
+    tags = serializers.StringRelatedField(many=True)  # Использует __str__ для каждого тега
+
+    class Meta:
+        model = Article
+        fields = ['title', 'text', 'creater', 'tags']
 
     def create(self, validated_data):
         title = validated_data.get('title')
@@ -25,9 +28,14 @@ class ArticleSerializer(serializers.Serializer):
         )
     
 
-class UserArticleSerializer(serializers.Serializer):
-    title = serializers.CharField()
-    text = serializers.CharField()
+class UserArticleSerializer(serializers.ModelSerializer):
+    
+    creater = serializers.StringRelatedField()  # Показывает строковое представление пользователя
+    tags = serializers.StringRelatedField(many=True)  # Использует __str__ для каждого тега
+
+    class Meta:
+        model = Article
+        fields = ['title', 'text', 'creater', 'tags']
 
     def update(self, instance, validated_data):
         instance.title = validated_data.get(
@@ -44,4 +52,6 @@ class UserArticleSerializer(serializers.Serializer):
         return instance
     
 
-
+class TagFilterSerialier(serializers.Serializer):
+    tag = serializers.CharField()
+    slug = serializers.SlugField()

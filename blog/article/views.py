@@ -1,3 +1,5 @@
+from django.db.models import Q
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
@@ -5,20 +7,41 @@ from rest_framework import status
 
 from users.models import User
 
-from .serializer import ArticleSerializer, UserArticleSerializer
-from .models import Article
+from .serializer import *
+from .models import Article, TagArticle
 
 
 class ArticlesApiView(APIView):
     def get(self,request):
-        article = Article.objects.all()
+        list_keys = list(request.GET.keys())
+        print(list_keys)
+        if (request.GET):
+            query = Q()
+
+            for value in list_keys:
+                query |= Q(tags__slug=value)
+            
+            # Фильтруем статьи по тегам
+            articles = Article.objects.filter(query)
+            
+        else:
+            articles = Article.objects.all()
+
         serializer = ArticleSerializer(
-            article,
+            articles,
             many = True
         ).data
 
         return Response(serializer,status=status.HTTP_200_OK)
     
+
+class TagFilterApiView(APIView):
+    def get(self,request):
+        tag = TagArticle.objects.all()
+        serializer = TagFilterSerialier(tag,many=True).data
+
+        return Response(serializer,status=status.HTTP_200_OK)
+
 
 class CreateArticleApiView(APIView):
     # authentication_classes = [TokenAuthentication]

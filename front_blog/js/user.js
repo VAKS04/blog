@@ -81,7 +81,6 @@ function Form(){
     const last_name = document.getElementById('last-name');
     const email = document.getElementById('email');
     const username = document.getElementById('username');
-    // const userLink = document.getElementsByClassName('reg-auth-link')[0];
 
     return {
         "image":image,
@@ -89,7 +88,6 @@ function Form(){
         "last_name":last_name,
         "email":email,
         "username":username,
-        // "userLink":userLink,
     }
 }
 
@@ -107,7 +105,6 @@ function getUserData(){
 function goToPage(){
     const aLink = document.querySelectorAll('a.a-link');
     aLink.forEach(element => {
-        // console.log(element);
         element.addEventListener('click',(even)=>{
             even.preventDefault();
             const link = element.getAttribute('href');
@@ -127,7 +124,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         updateForm(Form(), user);
     
         const data = await getUserArticle(`http://127.0.0.1:8000/api/v2/user/article/${user.username}/`,token);
-        const blockArticle = document.getElementsByClassName('container-articles')[0];
+        const blockArticle = document.getElementsByClassName('article-block')[0];
         console.log(blockArticle);
         console.log(data);
         if('detail' in data){
@@ -135,15 +132,46 @@ document.addEventListener('DOMContentLoaded', async () => {
             <div class="main-subtitle">${data.detail}</div>
             `
         }else{
+
         for (const data_ of data){
+                
             const dataText = data_.text.substring(0,100) + "...";
+            
+            let content_block = `
+                <div class="creater-block">Creater : ${data_.creater}</div>
+            `
+
+            if (data_.tags.length){
+                let tags = ""; 
+                
+                for (const i of data_.tags){
+                    if (tags.length <= 50){
+                        tags += `#${i} `;
+                    }else{
+                        tags += "...";
+                        break;
+                    }
+                }
+
+                content_block += `
+                    <div class="tag-block">${tags}</div>
+                `
+            }
+
             blockArticle.innerHTML += `
-                <div class="container-article">
+                <div class="content-article-block">
                     <div class="title-block">
-                        <a class="a-link" href="title=${data_.title}">${data_.title}</a>
+                        <a class="a-link" href="title=${data_.title}&creater=${data_.creater}">${data_.title}</a>
                     </div>
                     <div class="text-block">${dataText}</div>
-                </div>`;}}
+                    <div class="short-inf">
+                        ${content_block}
+                    </div>
+                </div>
+                `;
+            }
+        }
+        
         console.log(`Article data - ${data}`);
         console.log(data);
         goToPage();       

@@ -7,7 +7,10 @@ from .models import User
 
 
 class EmailBackend(ModelBackend):
-    def authenticate(self, request: HttpRequest, email: str | None = ..., password: str | None = ..., **kwargs: Any):
+    def authenticate(self, request: HttpRequest, 
+                     email: str | None = ..., 
+                     password: str | None = ..., 
+                     **kwargs: Any):
         try:
             user = User.objects.get(email = email)
         except User.DoesNotExist:
