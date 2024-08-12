@@ -1,4 +1,16 @@
-import { logout,getUserData,userLink,createFormArticle} from "./helper.js";
+import { logout,getUserData,userLink,createFormArticle,tags} from "./helper.js";
+
+async function response(url){
+    const response = await fetch(url);
+
+    if (response.ok){
+        const articles = await response.json();
+        console.log(articles);
+        return articles;
+    }else{
+        return {"detail":"request is fould"};
+    }
+}
 
 document.addEventListener("DOMContentLoaded",()=>{
 
@@ -21,15 +33,39 @@ document.addEventListener("DOMContentLoaded",()=>{
         const token = localStorage.getItem('token');
         const titleDoc = document.getElementById('title').value;
         const textDoc = document.getElementById('text').value;
-        console.log(titleDoc);
+        // console.log(titleDoc);
+        // console.log(textDoc)
+
         const creater = JSON.parse(localStorage.getItem('user'));
+
+        // console.log(creater.username)
+
+        const checkboxes = document.querySelectorAll(".tags input[type='checkbox']");
+        console.log(checkboxes)
+
+        const selectedTags = [];
+    
+        // console.log(checkboxes)
+
+        // Собираем значения отмеченных чекбоксов
+        checkboxes.forEach(checkbox => {
+            console.log(checkbox.cheched)
+          if (checkbox.checked) {
+            selectedTags.push(checkbox.name);
+          }
+        });
+
+        // console.log(selectedTags);
+
         const data = {
             "title":titleDoc,
             "text":textDoc,
-            "creater":creater.username
-        }
-    
+            "creater":creater.username,
+            "tags":selectedTags
+        };
         
+        console.log(data);
+
         try {
             const response = await fetch('http://127.0.0.1:8000/api/v2/article/create/',{
                 method:"POST",
@@ -61,6 +97,25 @@ document.addEventListener("DOMContentLoaded",()=>{
     
         logout();
     });
+
+    document.getElementById('tags').addEventListener('click', async (event)=>{
+        event.preventDefault();
+        const containerTags = document.getElementsByClassName('container-tags')[0];
+        const blockContent = document.getElementsByClassName('list-tags')[0];
+        
+        console.log(blockContent);
+        
+        const url = "http://127.0.0.1:8000/api/v2/article/filter/";
+        const responseData = await response(url);
+
+        if (blockContent){
+            blockContent.remove();
+        }else{
+            const newContent = document.createElement("div");
+            newContent.className = "list-tags";
+
+            tags(newContent,responseData);
+            containerTags.appendChild(newContent);
+        }
+    })
 })
-
-

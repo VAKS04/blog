@@ -14,15 +14,15 @@ document.addEventListener("DOMContentLoaded", async(event)=>{
     event.preventDefault();
     const filterblock = document.getElementsByClassName('filter-content')[0];
     filterblock.innerHTML = "";
-    const url = "http://127.0.0.1:8000/api/v2/article/filter/";
+    const url = "http://127.0.0.1:8000/api/v2/tag/";
 
     const responseData = await response(url);
-    // console.log('tag');
+    console.log('tag');
 
     for (const key of responseData){
         filterblock.innerHTML += `
             <div class="tag">
-                <input type="checkbox" name = "${key['slug']}" >
+                <input type="checkbox" name="${key['slug']}" >
                 <label>${key['tag']}</label>  
             </div>
         `
@@ -34,10 +34,10 @@ document.addEventListener("DOMContentLoaded", async(event)=>{
         </div>
     `
     
-    document.getaddEventListener('click', async(event)=>{
-        event.preventDefault()
-        const url = "http://127.0.0.1:8000/api/v2/article/";
-        const responseData = await response(url);
+    // document.getElementById('').addEventListener('click', async(event)=>{
+    //     event.preventDefault()
+    //     const url = "http://127.0.0.1:8000/api/v2/article/";
+    //     const responseData = await response(url);
 
-    })
+    // })
 })

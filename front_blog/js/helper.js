@@ -37,10 +37,46 @@ const general = {
                         <label>Text : </label>
                         <textarea id="text"></textarea>
                     </div>
+                    <div class="tags">
+                        <p>Добавьте тег, чтобы полнее описать вашу статью и быстро найти ее через поисковый запрос</p>
+                        <p>--><a href="#" id="tags">Теги</a><--</p>
+                        <div class="container-tags">
+                        </div>
+                    </div>
                     ${buttons}
                 </form>
             </div>
         `;
+    },
+    tags:function(blockContent,jsonData,checkedList=undefined){
+        if (checkedList === undefined){
+            for (const key of jsonData){
+                blockContent.innerHTML += `
+                    <div class="tag">
+                        <input type="checkbox" name="${key['slug']}">
+                        <label>${key['tag']}</label>  
+                    </div>
+                `
+            }
+        }else{
+            for (const key of jsonData){
+                if(checkedList.includes(key['tag'])){
+                    blockContent.innerHTML += `
+                        <div class="tag">
+                            <input type="checkbox" name="${key['slug']}" checked>
+                            <label>${key['tag']}</label>  
+                        </div>
+                    `
+                }else{
+                    blockContent.innerHTML += `
+                        <div class="tag">
+                            <input type="checkbox" name="${key['slug']}">
+                            <label>${key['tag']}</label>  
+                        </div>
+                    `
+                }
+            }
+        }
     },
     createArticleButton: function(){
         return `    
@@ -74,3 +110,4 @@ export const getUserData = general.getUserData;
 export const userLink = general.userLink;
 export const createFormArticle = general.createFormArticle;
 export const updateOrDeleteArticle = general.updateOrDeleteArticle;
+export const tags = general.tags;

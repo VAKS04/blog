@@ -421,17 +421,18 @@ form input {
     color: black;
 }
 
-
 .container-create-article 
 .buttons {
     display: flex;
     margin-bottom: 10px;
 }
+
 .container-create-article 
 .buttons *{
     color: #0D0D0D;
 
 }
+
 .container-create-article 
 .buttons .update-article,
 .container-create-article 
@@ -439,4 +440,13 @@ form input {
     display: flex;
     justify-content: center;
     flex: 1;
+}
+
+.list-tags{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.list-tags .tag {
+    margin: 2px 5px;
 }

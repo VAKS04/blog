@@ -27,8 +27,6 @@ async function getUserArticle(url,token){
         console.log(`Error :${error}`);
         return Error("error");
     }
-
-
 }
 
 async function changeUserData(url,token,data){
@@ -105,11 +103,12 @@ function getUserData(){
 function goToPage(){
     const aLink = document.querySelectorAll('a.a-link');
     aLink.forEach(element => {
-        element.addEventListener('click',(even)=>{
-            even.preventDefault();
+        element.addEventListener('click', (event)=>{
+            event.preventDefault();
             const link = element.getAttribute('href');
             window.location.href = `change_article_or_delete.html?${link}`;
-            },false);
+            },false
+        );
     })
 }
 
@@ -125,8 +124,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     
         const data = await getUserArticle(`http://127.0.0.1:8000/api/v2/user/article/${user.username}/`,token);
         const blockArticle = document.getElementsByClassName('article-block')[0];
-        console.log(blockArticle);
-        console.log(data);
+        
         if('detail' in data){
             blockArticle.innerHTML += `
             <div class="main-subtitle">${data.detail}</div>
@@ -134,17 +132,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         }else{
 
         for (const data_ of data){
-                
             const dataText = data_.text.substring(0,100) + "...";
             
             let content_block = `
                 <div class="creater-block">Creater : ${data_.creater}</div>
             `
-
             if (data_.tags.length){
                 let tags = ""; 
                 
                 for (const i of data_.tags){
+                    // console.log(i);
                     if (tags.length <= 50){
                         tags += `#${i} `;
                     }else{
@@ -161,7 +158,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             blockArticle.innerHTML += `
                 <div class="content-article-block">
                     <div class="title-block">
-                        <a class="a-link" href="title=${data_.title}&creater=${data_.creater}">${data_.title}</a>
+                        <a class="a-link" href="title=${data_.id}">${data_.title}</a>
                     </div>
                     <div class="text-block">${dataText}</div>
                     <div class="short-inf">
@@ -171,7 +168,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 `;
             }
         }
-        
         console.log(`Article data - ${data}`);
         console.log(data);
         goToPage();       
@@ -182,6 +178,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const user = getUserData().user;
         const token = getUserData().token;
         const formData = changeDataForm();
+
         const data = {
             "image": formData.image !== "" ? formData.image: "",
             "first_name": formData.first_name !== "" ? formData.first_name: "",
@@ -193,7 +190,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.log(data);
         await changeUserData(`http://127.0.0.1:8000/api/v2/user/${user.email}/`,token,data);
         location.reload();
-      
     });
 
     // Обработчик для кнопки "Logout"
