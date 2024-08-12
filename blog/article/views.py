@@ -5,17 +5,16 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 
-from users.models import User
-
 from .serializer import *
 from .models import Article, TagArticle
 
 
 class ArticlesApiView(APIView):
-    def get(self,request):
-        list_keys = list(request.GET.keys())
-        print(list_keys)
+    def get(self, request):
         if (request.GET):
+            list_keys = list(request.GET.keys())
+
+            print(list_keys)
             query = Q()
 
             for value in list_keys:
@@ -33,6 +32,7 @@ class ArticlesApiView(APIView):
         ).data
 
         return Response(serializer,status=status.HTTP_200_OK)
+        # return paginator.get_paginated_response(serializer)
     
 
 class TagFilterApiView(APIView):
@@ -49,11 +49,9 @@ class CreateArticleApiView(APIView):
 
     def post(self,request,*args,**kwargs):
         data = request.data
-        # print(data)
-        serializer = ArticleSerializer(
+        serializer = ArticleDeserializer(
             data=data
         )
-        # print(f"serializer is {serializer.is_valid()}")
         if serializer.is_valid():
             serializer.save()
 
@@ -68,17 +66,32 @@ class CreateArticleApiView(APIView):
 class UserArticleApiView(APIView):
     permission_classes = [IsAuthenticated]
 
+    def get(self,request,*args,**kwargs):
+        user = kwargs.get('username', None)
+        pk = kwargs.get('id', None)
+
+        if user is not None and id is not None:
+            try:
+                article_user = Article.objects.get(
+                    pk=pk)
+                serializer = ArticleSerializer(article_user)
+
+                return Response(
+                    serializer.data,status=status.HTTP_200_OK
+                )
+            except Article.DoesNotExist:
+                return Response ({"detail":"Article not found"})
+
     def post(self,request,*args,**kwargs):
-        # print(kwargs.get('username',None))
         user = kwargs.get('username',None)
-        # print(f"Method post response {user}")
+
         if user is not None:
             article_user = Article.objects.filter(
                 creater__username = user
             )
 
             if article_user.exists():
-                serializer = UserArticleSerializer(
+                serializer = ArticleSerializer(
                     article_user, 
                     many = True
                 )
@@ -94,57 +107,35 @@ class UserArticleApiView(APIView):
             {'detail':"Error"},
             status=status.HTTP_400_BAD_REQUEST
         )
-    
-    def get(self,request,*args,**kwargs):
-        user = kwargs.get('username',None)
-        title = kwargs.get('title',None)
-
-        if user is not None and title is not None:
-
-            try:
-                article_user = Article.objects.get(
-                    creater__username=user,
-                    title=title)
-                # print(article_user)
-                # return Response({'detail':'Запись не найдена'},status=status.HTTP_204_NO_CONTENT)
-                serializer = UserArticleSerializer(article_user)
-
-                return Response(
-                    serializer.data,status=status.HTTP_200_OK
-                )
-            except Article.DoesNotExist:
-                return Response ({"detail":"Article not found"})
 
     def put(self,request,*args,**kwargs):
-        username = kwargs.get('username',None)
-        title = kwargs.get('title',None)
         data = request.data
-        
-        user = User.objects.get(username = username)
+        username = request.user.username
 
-        if user != request.user:
-            return Response({'detail': "Недостаточно прав для изменения профиля"}, status=status.HTTP_403_FORBIDDEN)
         try:
-            article = Article.objects.get(title = title,creater__username = username)
+            article = Article.objects.get(pk=data['id'])
         except Article.DoesNotExist:
             return Response({'detail':"Article not found"})
         
-        serializer = UserArticleSerializer(data=data,instance=article)
+        if (article.creater.username != username):
+            return Response({"Error":"Не достаточно прав на изменение статьи"}, status=status.HTTP_403_FORBIDDEN)
+        
+        serializer = ArticleUpdateSerializer(data=data, instance=article, partial=True)
+
 
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data,status=status.HTTP_200_OK)
-        # title = data.get('title',None)
+        
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
     
     def delete(self,request,*args,**kwargs):
         username = kwargs.get('username',None)
-        title = kwargs.get('title',None)
+        pk = kwargs.get('id',None)
 
         try:
             article = Article.objects.get(
-                title=title,
-                creater__username=username)  
+                pk=pk)  
               
             article.delete()
 
@@ -157,7 +148,6 @@ class UserArticleApiView(APIView):
 class ShowArticleApiView(APIView):
     def get(self,request,*args,**kwargs):
         creater = kwargs.get('creater',None)
-        # print(creater)
         title = kwargs.get('title',None)
 
         article = Article.objects.filter(

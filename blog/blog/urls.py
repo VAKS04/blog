@@ -22,12 +22,13 @@ from article.views import *
 
 
 ARTICLE_API = 'api/v2/article/'
+TAG_API = 'api/v2/tag/'
 USER_API = 'api/v2/user/'
 
 urlpatterns = [
      path('admin/', admin.site.urls),
 
-     path(ARTICLE_API + 'filter/',
+     path(TAG_API,
           TagFilterApiView.as_view()),
 
      path(ARTICLE_API,
@@ -44,13 +45,13 @@ urlpatterns = [
      path(USER_API + 'article/<str:username>/',
           UserArticleApiView.as_view()),
 
-     path(USER_API + 'article/<str:username>/<str:title>/',
+     path(USER_API + 'article/<str:username>/<int:id>/',
           UserArticleApiView.as_view()),
 
-     path(USER_API + 'article/update/<str:username>/<str:title>/',
+     path(USER_API + 'article/update/',
           UserArticleApiView.as_view()),
 
-     path(USER_API + 'article/delete/<str:username>/<str:title>/',
+     path(USER_API + 'article/delete/<str:username>/<int:id>/',
           UserArticleApiView.as_view()),
 
      path(USER_API + 'reg/',
