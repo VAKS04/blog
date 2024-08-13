@@ -88,7 +88,6 @@ class UserView(APIView):
                          status=status.HTTP_200_OK)
     
     def put(self,request,email):
-
         try :
             user = User.objects.get(email=email)
         except User.DoesNotExist:
@@ -110,4 +109,24 @@ class UserView(APIView):
                             status=status.HTTP_200_OK)
         print(serializer.errors)
         return Response(serializer.errors,
-                        status=status.HTTP_400_BAD_REQUEST)   
+                        status=status.HTTP_400_BAD_REQUEST)  
+
+
+class ChangePassword(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def put(self,request,*args,**kwargs):
+        username = request.user.username
+
+        data = request.data
+        old_password = data.get('old-password')
+        new_password = data.get('new-password')
+
+        user = authenticate(username=username, password=old_password)
+        if user is not None:
+            user.set_password(new_password)
+            user.save()
+            return Response({"detail":"Password was changed"},status=status.HTTP_200_OK)
+        
+        return Response({"Error":"Old password doesn't correct"},status=status.HTTP_404_NOT_FOUND)
+

@@ -39,10 +39,8 @@ document.addEventListener('DOMContentLoaded',async () => {
     try {
 
         const responseData = await response(`http://127.0.0.1:8000/api/v2/article/?${params}`);
-        console.log(responseData);
 
-        for (const data_ of responseData){
-                
+        for (const data_ of responseData){       
             const dataText = data_.text.substring(0,100) + "...";
             
             let content_block = `

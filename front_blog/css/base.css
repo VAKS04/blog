@@ -450,3 +450,54 @@ form input {
 .list-tags .tag {
     margin: 2px 5px;
 }
+
+
+/* ----------------change-password---------------- */
+
+.change-password-block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: inherit;
+}
+
+.change-password-block
+.change-password-form{
+    background-color: #242426;
+    min-width: 250px;
+    border-radius: 10px;
+}
+
+.change-password-block
+.change-password-form
+.form-title{
+    display: flex;
+    justify-content: center;
+    font-size: 22px;
+    margin: 5px 0;
+}
+
+.change-password-block 
+.change-password-form
+.label-password {
+    display: flex;
+    flex-direction: column;
+    margin: 7px 10px;
+}
+.change-password-block
+.change-password-form
+.error-block{
+    margin: 7px 10px;
+    color: red;
+}
+#change-password{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#change-password *{
+    background-color: #595959;
+    padding: 10px;
+    margin-left: 10px;
+}

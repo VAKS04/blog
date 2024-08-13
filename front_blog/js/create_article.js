@@ -41,21 +41,14 @@ document.addEventListener("DOMContentLoaded",()=>{
         // console.log(creater.username)
 
         const checkboxes = document.querySelectorAll(".tags input[type='checkbox']");
-        console.log(checkboxes)
-
         const selectedTags = [];
     
-        // console.log(checkboxes)
-
         // Собираем значения отмеченных чекбоксов
         checkboxes.forEach(checkbox => {
-            console.log(checkbox.cheched)
           if (checkbox.checked) {
             selectedTags.push(checkbox.name);
           }
         });
-
-        // console.log(selectedTags);
 
         const data = {
             "title":titleDoc,
@@ -64,8 +57,6 @@ document.addEventListener("DOMContentLoaded",()=>{
             "tags":selectedTags
         };
         
-        console.log(data);
-
         try {
             const response = await fetch('http://127.0.0.1:8000/api/v2/article/create/',{
                 method:"POST",
@@ -80,9 +71,7 @@ document.addEventListener("DOMContentLoaded",()=>{
         
             if (response.ok){
                 const articles = await response.json();
-                console.log("response ok")
             }else{
-                console.log('error')
                 return {"detail":"request is fould"}
             }
             window.location.href = "user_page.html";
@@ -103,9 +92,8 @@ document.addEventListener("DOMContentLoaded",()=>{
         const containerTags = document.getElementsByClassName('container-tags')[0];
         const blockContent = document.getElementsByClassName('list-tags')[0];
         
-        console.log(blockContent);
         
-        const url = "http://127.0.0.1:8000/api/v2/article/filter/";
+        const url = "http://127.0.0.1:8000/api/v2/tag/";
         const responseData = await response(url);
 
         if (blockContent){

@@ -40,6 +40,8 @@ urlpatterns = [
      path(ARTICLE_API +'<str:creater>/<str:title>/',
           ShowArticleApiView.as_view()),
 
+     path(USER_API+'change-password/',ChangePassword.as_view()),
+
      path(USER_API,UserView.as_view()),
 
      path(USER_API + 'article/<str:username>/',
